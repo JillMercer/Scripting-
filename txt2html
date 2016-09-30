@@ -1,0 +1,30 @@
+#!/bin/bash
+#Jill Mercer
+
+#Variable DF stands for Data File and TL is title lines
+DF=$2
+TL=$1
+
+#Setting up HTML file
+echo '<html>' > $DF.html
+echo '<body>' >> $DF.html
+echo '<center>' >> $DF.html
+
+#Getting Title
+head -$TL $DF >> $DF.html 
+ 
+#Math for body
+FSIZE=`wc -l < $DF` 
+BODY=`expr $FSIZE - $TL`
+
+#HTML and body
+echo '</center>' >> $DF.html
+echo '<pre>' >> $DF.html
+
+#Getting values between title and end of file
+tail -$BODY $DF >> $DF.html
+
+#Finishing HTML File
+echo '</pre>' >> $DF.html
+echo '</body>' >> $DF.html
+echo '</html>' >> $DF.html

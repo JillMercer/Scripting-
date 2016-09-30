@@ -1,0 +1,41 @@
+#!/bin/bash
+#Jill Mercer
+
+location=`pwd` #stores where the user is located
+
+#checks if there is more than one or more occurence of arguement in wastebasket
+if [ $# -ne 1 ]
+	then
+	echo can only have one argument
+	exit 1
+fi
+if [ `ls ~/wastebasket/ | grep -c "$1"` -ge 1 ]   
+   then 
+	#checks to see if there is more than one occurence in wastebasket asks which one to restore
+	if [ `ls ~/wastebasket/ | grep -c "$1"` -gt 1 ]
+	   then
+	     echo Which file would you like restored type the exact filename
+	     ls ~/wastebasket/ | grep ^$1
+             read filename
+		#make sure that file exists
+	  	   if [ -e ~/wastebasket/$filename ]
+			then
+	    		 mv ~/wastebasket/$filename .
+			 echo file was moved "$filename"
+	           else
+			echo File named "$filename" not in wastebasket
+		   fi
+	#checks if the exact file name is in wastebin as it would look for text and find text.* and go in if
+	elif [ ! -e ~/wastebasket/$1 ]
+		then
+		echo that file name was not in wastebin
+		exit 1
+	#if nothing else just move that file	
+	else
+	   mv ~/wastebasket/$1 $location/$1
+	   echo file was moved "$1"
+	fi 
+else
+    echo No file named "$1" in wastebasket
+    exit 1
+fi

@@ -1,0 +1,21 @@
+#!/bin/bash
+#Jill Mercer
+#should delete directory and files in directory wastebasket
+echo Are you sure you want to delete all files in the wastebasket '(y/n)'?
+read input #user input will be stored in input
+
+if [ $input == 'y' ]	
+    then
+        if [ -d ~/wastebasket ] 
+       	 then
+           rm ~/wastebasket/*
+           rmdir ~/wastebasket
+	   echo Files and directory were deleted
+	else 
+	   echo No directory called wastebasket in home
+	   exit 1
+	fi
+else
+    echo Nothing was deleted
+    exit 2
+fi
